@@ -40,6 +40,8 @@ builder.Services.AddTransient<IManageUserDA, ManageUserDA>();
 builder.Services.AddTransient<IAuthUserBW, AuthUserBW>();
 builder.Services.AddTransient<IManageCatDA, ManageCatDA>();
 builder.Services.AddTransient<ITheCatAPISG, TheCatAPISG>();
+builder.Services.AddTransient<IManageCatBW, ManageCatBW>();
+
 
 // Configuration of the authentication
 builder.Services.AddAuthentication(options =>
@@ -62,7 +64,7 @@ builder.Services.AddAuthentication(options =>
 // Configuration of the database
 builder.Services.AddDbContext<CatAPIDbContext>(options =>
 {
-    var connectionString = "Server=localhost;Database=CatsDatabase;Trusted_Connection=True;TrustServerCertificate=true;";
+    var connectionString = "workstation id=cats-appDB.mssql.somee.com;packet size=4096;user id=deathbat_SQLLogin_1;pwd=lgdwirzrs6;data source=cats-appDB.mssql.somee.com;persist security info=False;initial catalog=cats-appDB;TrustServerCertificate=True";
     options.UseSqlServer(connectionString);
 });
 
@@ -75,11 +77,18 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
+
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
 
 app.UseHttpsRedirection();
 
