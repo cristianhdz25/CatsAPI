@@ -1,6 +1,8 @@
 ﻿
 namespace CatAPI.BC.Models
 {
+
+    //This class represents a cat breed with its properties.
     public class CatBreed
     {
         public int IdCatBreed { get; set; } 

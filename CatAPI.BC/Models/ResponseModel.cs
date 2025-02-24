@@ -1,5 +1,6 @@
 ﻿namespace CatAPI.BC.Models
 {
+    //This class represents the response model with its properties.
     public class ResponseModel
     {
         public bool Success { get; set; }

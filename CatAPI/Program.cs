@@ -23,7 +23,7 @@ builder.Services.AddHttpClient();
 
 // Get JWT settings
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]); // Convertir la clave secreta a bytes
+var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"] ?? ""); // Convertir la clave secreta a bytes
 
 // Register services
 builder.Services.AddSingleton<PasswordHasher>();
@@ -31,7 +31,7 @@ builder.Services.AddSingleton<PasswordHasher>();
 builder.Services.AddSingleton<JwtGenerator>(provider =>
 {
     return new JwtGenerator(
-        jwtSettings["SecretKey"],
+        jwtSettings["SecretKey"] ?? "",
         jwtSettings.GetValue<int>("ExpiryInMinutes")
     );
 });
